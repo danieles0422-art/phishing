@@ -393,7 +393,16 @@ function note(msg){
 }
 
 /* ---------- Navegación ---------- */
-const MODULES=['Introducción','Pregunta de investigación','Problema y contexto','Reconocer el phishing','Canales de ataque','Señales de alerta','Ingeniería social','Protección','Prevención','Respuesta','Evaluación','Evidencia científica','Ruta de revisión','Relación encontrada','Implicaciones','Conclusiones','Referencias'];
+const MODULES=['Introducción','Pregunta de investigación','Problema y contexto','Reconocer el phishing','Canales'];
+
+/* ---------- Guion breve del avatar para cada diapositiva ----------*/
+const AVATAR_SCRIPTS=[
+  'Hola, bienvenidos a nuestra capacitación sobre phishing, en este recorrido vamos a aprender a reconocer los engaños digitales y a tomar decisiones más seguras cuando recibimos mensajes sospechosos',
+  'En esta parte presentamos la pregunta que orienta nuestro trabajo, queremos comprender cómo las estrategias educativas digitales pueden fortalecer las competencias necesarias para identificar y prevenir el phishing',
+  'El problema parte de una situación común, conocer qué es el phishing no siempre significa saber actuar frente a un intento real, por eso nos interesa revisar qué formas de aprendizaje pueden ayudar a llevar ese conocimiento a situaciones cotidianas',
+  'Ahora vamos a conocer qué es el phishing y cómo funciona, normalmente el atacante intenta hacerse pasar por alguien de confianza y busca que actuemos rápido, entreguemos información o abramos un enlace',
+  'El phishing no llega únicamente por correo, también puede aparecer en mensajes de texto, llamadas, códigos QR, redes sociales o aplicaciones de mensajería, por eso es importante reconocer las señales de alerta sin importar el canal'
+];
 function resetAnatomy(){
   anatomyFound.clear();
   $$('.flag.on').forEach(x=>x.classList.remove('on'));
@@ -415,9 +424,17 @@ function go(x){
   $$('.side-item').forEach((b,i)=>b.classList.toggle('active',i===n));
   const activeSide=document.querySelector('.side-item.active');
   if(activeSide) activeSide.scrollIntoView({block:'nearest',behavior:'smooth'});
-  const speech=$('speechCard');if(speech){const msgs=['¡Hola! Soy tu guía de seguridad digital. Te acompañaré en esta capacitación sobre phishing. Puedes hacer clic en cualquier texto para que lo lea, o usar el botón Narrar para escuchar la diapositiva.','Aquí planteamos la pregunta de investigación que orienta toda la revisión científica.','Este es el problema que justifica estudiar la relación entre formación digital y competencias de prevención.','Aprenderás qué es el phishing, cómo funciona y qué busca conseguir el atacante.','Revisaremos los principales canales por los que puede llegar un intento de phishing.','Observa el correo y descubre las señales que permiten reconocer un mensaje sospechoso.','Los atacantes pueden aprovechar emociones como urgencia, miedo, autoridad o recompensa.','Estos cinco pasos ayudan a verificar un mensaje antes de hacer clic o entregar información.','Aquí reunimos buenas prácticas para prevenir el phishing y proteger las cuentas.','Si ya caíste en un engaño, actuar rápido ayuda a reducir las posibles consecuencias.','Ahora es momento de poner a prueba lo aprendido con la evaluación.','Esta diapositiva resume qué muestra la evidencia científica revisada.','Aquí explicamos cómo organizamos la evidencia para responder la pregunta de investigación.','La relación se plantea entre estrategias educativas, competencias de seguridad y conducta preventiva.','Estas son las características que la evidencia sugiere considerar en una plataforma educativa.','Estas conclusiones sintetizan la respuesta a la pregunta de investigación.','Aquí están las principales fuentes utilizadas como base de la revisión científica.'];speech.textContent=msgs[n]||msgs[0];}
+  const speech=$('speechCard');if(speech){
+    const msgs=[
+      '¡Hola! Soy tu guía de seguridad digital. Pulsa «Narrar» para escuchar una explicación breve de esta diapositiva o toca cualquier texto para escucharlo.',
+      AVATAR_SCRIPTS[1],
+      AVATAR_SCRIPTS[2],
+      AVATAR_SCRIPTS[3],
+      AVATAR_SCRIPTS[4]
+    ];
+    speech.textContent=msgs[n]||msgs[0];
+  }
   $$('.dot').forEach((d,i)=>d.setAttribute('aria-current',i===n));
-  if(n===5)resetAnatomy();
   setMood(slides[n].dataset.mood||'neutral');
   caption(IDLE,true);
   if(auto){const g=gen;setTimeout(()=>{if(auto&&g===gen)narrate()},450)}
@@ -439,9 +456,49 @@ function narrate(){
   clearControlActive();
   $('play')?.classList.add('active');
   stopAll();
-  queue=$$('[data-read]',slides[n]).filter(e=>e.offsetParent!==null&&!e.hasAttribute('data-noread')&&!e.isContentEditable);
-  if(!queue.length){$('play')?.classList.remove('active');return}
-  qix=0;playing=true;step();
+
+  /*
+     Narración completa de la diapositiva:
+     1. El avatar presenta primero el guion de la diapositiva.
+     2. Cuando termina, lee los textos marcados con data-read.
+     3. Al terminar todos los textos, si Auto está activo,
+        la función finished() pasa a la siguiente diapositiva.
+  */
+  const script=AVATAR_SCRIPTS[n]||'';
+  const currentSlide=slides[n];
+
+  queue=$$('[data-read]',currentSlide).filter(el=>!el.closest('[hidden]'));
+  qix=0;
+  playing=true;
+
+  const readSlide=()=>{
+    if(!playing||stopped)return;
+
+    if(qix>=queue.length){
+      playing=false;
+      $('play')?.classList.remove('active');
+      finished();
+      return;
+    }
+
+    const el=queue[qix++],g=gen;
+    readEl(el,()=>{
+      setTimeout(()=>{
+        if(g===gen&&playing&&!stopped)readSlide();
+      },250);
+    });
+  };
+
+  if(script){
+    caption(script);
+    lookAt($('speechCard')||currentSlide);
+    speak(script,()=>{
+      if(!playing||stopped)return;
+      readSlide();
+    });
+  }else{
+    readSlide();
+  }
 }
 $('play').onclick=narrate;
 $('face').onclick=narrate;
