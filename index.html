@@ -9,113 +9,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&amp;family=Public+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css">
-<style>
-/* Ajuste puntual · Primera entrada: tarjetas limpias + pop-ups */
-.rea-popups{
-  grid-template-columns:repeat(2,minmax(280px,360px))!important;
-  justify-content:center!important;
-  align-items:stretch!important;
-  gap:22px!important;
-  max-width:760px;
-  margin:30px auto 0!important;
-}
-.rea-popups .info-card{
-  position:relative;
-  pointer-events:auto;
-  min-height:150px;
-  padding:28px 24px!important;
-  border:1px solid #d9dfd0;
-  border-radius:18px;
-  background:#fffdf5;
-  box-shadow:0 8px 20px #1d3f2b0b;
-  color:var(--deep);
-  text-align:center;
-  cursor:pointer;
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.rea-popups .info-card:hover{
-  transform:translateY(-3px);
-  border-color:#b9d56f;
-  box-shadow:0 12px 26px #1d3f2b16;
-}
-.info-card-title{
-  display:block;
-  font:700 1.25rem/1.2 var(--serif);
-}
-.info-card-hint{
-  display:block;
-  margin-top:16px;
-  color:#6d7d73;
-  font:600 .78rem/1.2 var(--sans);
-}
-.info-modal[hidden]{display:none!important}
-.info-modal{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:grid;
-  place-items:center;
-  padding:24px;
-}
-.info-modal-backdrop{
-  position:absolute;
-  inset:0;
-  background:rgba(0,38,25,.58);
-  backdrop-filter:blur(3px);
-}
-.info-modal-card{
-  position:relative;
-  z-index:1;
-  width:min(680px,92vw);
-  max-height:min(78vh,620px);
-  overflow:auto;
-  padding:34px 38px 32px;
-  border:1px solid #b9d56f;
-  border-radius:22px;
-  background:#f8f9e7;
-  box-shadow:0 24px 60px rgba(0,0,0,.25);
-  color:#365047;
-}
-.info-modal-kicker{
-  display:inline-block;
-  margin-bottom:12px;
-  padding:6px 11px;
-  border-radius:999px;
-  background:#e8f2d8;
-  color:#315b45;
-  font:700 .72rem var(--sans);
-  letter-spacing:.04em;
-}
-.info-modal-card h3{
-  margin:0 42px 14px 0;
-  color:#003f2a;
-  font:700 1.55rem/1.15 var(--serif);
-}
-.info-modal-card p{
-  margin:0;
-  color:#53645b;
-  font:400 1rem/1.65 var(--sans);
-}
-.info-modal-close{
-  position:absolute;
-  top:13px;
-  right:15px;
-  width:38px;
-  height:38px;
-  border:0;
-  border-radius:50%;
-  background:#0b5b3e;
-  color:#fff;
-  font-size:25px;
-  line-height:1;
-  cursor:pointer;
-}
-.info-modal-close:hover{background:#08744d}
-@media(max-width:700px){
-  .rea-popups{grid-template-columns:minmax(240px,420px)!important}
-  .info-modal-card{padding:30px 24px 26px}
-}
-</style>
+
 </head>
 <body>
 <header class="head">
@@ -153,9 +47,12 @@
 <strong>GARCIA VILLARAGA JUAN FELIPE</strong><br/>
 <strong class="year">2026</strong>
 </p>
-<button class="go" data-go="1">
-      Empezar
-    </button>
+<div class="cover-actions">
+  <button class="go" data-go="1">Empezar</button>
+  <button class="help-btn" id="helpOpen" type="button" aria-haspopup="dialog" aria-controls="helpModal">
+    ? Ayuda
+  </button>
+</div>
 
 </div>
 <div class="art">
@@ -214,7 +111,7 @@
 <p class="lead" data-read="">
     ¿Cómo se relacionan las estrategias educativas digitales con el fortalecimiento de competencias para la identificación y prevención del phishing según la evidencia científica disponible?
   </p>
-<div class="research-focus">
+<div class="research-focus research-three">
 <div class="research-focus-card" data-read=""><b>Estrategias educativas digitales</b><p>Recursos y experiencias de aprendizaje como capacitación interactiva, simulaciones, ejercicios prácticos, retroalimentación, gamificación y contenidos adaptados al usuario.</p></div>
 <div class="research-focus-card" data-read=""><b>Competencias de seguridad</b><p>Capacidad para reconocer señales de phishing, verificar remitentes y enlaces, tomar decisiones seguras, prevenir la exposición y responder ante un incidente.</p></div>
 <div class="research-focus-card" data-read=""><b>Relación que se analiza</b><p>La pregunta no busca solo saber si una capacitación informa, sino cómo determinadas estrategias pueden contribuir al conocimiento, la toma de decisiones y las conductas preventivas.</p></div>
@@ -363,7 +260,7 @@ const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAl
 const synth=('speechSynthesis' in window&&'SpeechSynthesisUtterance' in window)?window.speechSynthesis:null;
 const slides=$$('#slides>.slide'),N=slides.length,av=$('av'),box=$('box'),capEl=$('say');
 const IDLE='Hola, soy tu guía de seguridad. Pulsa «Narrar» para que te explique esta diapositiva o toca cualquier texto para escucharlo.';
-let n=0,audioOn=true,auto=false,stopped=false,token=0,gen=0,playing=false,queue=[],qix=0,voice=null,lt=null,tmr=null,noteT=null,curU=null,seq=[],pos=0,tickMs=90,anatomyFound=new Set();
+let n=0,audioOn=true,auto=false,stopped=false,token=0,gen=0,playing=false,queue=[],qix=0,voice=null,lt=null,tmr=null,noteT=null,seq=[],pos=0,tickMs=90,anatomyFound=new Set();
 
 /* ---------- Voz ---------- */
 function pickVoice(){
@@ -448,7 +345,6 @@ function speak(text,done){
     if(simmed||e.error==='interrupted'||e.error==='canceled')return;
     if(!started)sim();else fin();
   };
-  curU=u;
   tmr=setTimeout(sim,1500);
   setTimeout(()=>{if(my===token&&!dead&&!simmed)synth.speak(u)},40);
 }
@@ -500,12 +396,6 @@ function single(el){
   gen++;playing=false;queue=[];readEl(el);
 }
 function stopAll(){gen++;playing=false;queue=[];cancelSpeech();clearReading()}
-function step(){
-  if(!playing)return;
-  if(qix>=queue.length){playing=false;finished();return}
-  const el=queue[qix++],g=gen;
-  readEl(el,()=>setTimeout(()=>{if(g===gen)step()},250));
-}
 function finished(){
   if(auto&&!slides[n].hasAttribute('data-manual')&&n<N-1){
     const g=gen;setTimeout(()=>{if(auto&&g===gen)go(n+1)},1000);
@@ -728,7 +618,43 @@ document.addEventListener('click',e=>{
   // Usa exactamente la misma función que se usa al pulsar un texto de la diapositiva.
   single(text);
 },true);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('infoModal')&&!$('infoModal').hidden)closeInfo()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if($('helpModal')&&!$('helpModal').hidden)closeHelp();
+    else if($('infoModal')&&!$('infoModal').hidden)closeInfo();
+  }
+});
+
+function openHelp(){
+  const modal=$('helpModal');
+  const text=$('helpModalText');
+  if(!modal||!text)return;
+  text.dataset.say='¿Cómo utilizar este recurso? '+text.textContent.trim();
+  modal.hidden=false;
+  modal.setAttribute('aria-hidden','false');
+  document.body.classList.add('info-open');
+  requestAnimationFrame(()=>modal.querySelector('.info-modal-close')?.focus());
+}
+function closeHelp(){
+  const modal=$('helpModal');
+  if(!modal)return;
+  stopAll();
+  modal.hidden=true;
+  modal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('info-open');
+}
+document.addEventListener('click',e=>{
+  const open=e.target.closest?.('#helpOpen');
+  if(open){e.preventDefault();e.stopPropagation();openHelp();return}
+  const close=e.target.closest?.('[data-close-help]');
+  if(close){e.preventDefault();e.stopPropagation();closeHelp();return}
+  const listen=e.target.closest?.('#helpModalListen');
+  if(listen){
+    e.preventDefault();e.stopPropagation();
+    const text=$('helpModalText');
+    if(text)single(text);
+  }
+},true);
 
 /* ---------- Interacción con textos ---------- */
 function enhance(){
@@ -799,11 +725,9 @@ function qrSvg(){
 }
 const qb=$('qbox');let qi=0,score=0,answered=false;
 function renderQ(){
-  const qp=null;
   if(qi>=Q.length){
     const r=RES.find(m=>score>=m[0])[1];
     const pct=Math.round(score/Q.length*100);
-    if(qp)qp.style.width='100%';
     qb.innerHTML=`<div class="res" data-read data-say="Obtuviste ${score} aciertos de ${Q.length}. ${r}">
       <span class="complete-badge">✓ EVALUACIÓN COMPLETADA</span>
       <h3>¡Buen trabajo!</h3>
@@ -820,7 +744,6 @@ function renderQ(){
   }
   answered=false;
   const q=Q[qi];
-  if(qp)qp.style.width=(qi/Q.length*100)+'%';
   qb.innerHTML=`<div class="qtop"><span>Mensaje ${qi+1} de ${Q.length}</span><span>Aciertos: ${score}</span></div>
   <div class="quiz-progress" aria-label="Progreso de la evaluación"><i id="quizFill" style="width:${qi/Q.length*100}%"></i></div>
   <div class="msg" data-read data-say="Mensaje por ${esc(q.c)}. De: ${esc(q.f)}. ${esc(q.t)}"><div class="mh"><b>${esc(q.c)}</b><span>${esc(q.f)}</span></div><p>${esc(q.t)}</p>${q.qr?qrSvg():''}</div>
@@ -882,6 +805,23 @@ document.addEventListener("DOMContentLoaded", () => {
     <p id="infoModalText"></p>
     <div class="info-modal-actions">
       <button class="info-modal-listen" id="infoModalListen" type="button" aria-label="Escuchar información">🔊 Escuchar</button>
+    </div>
+  </section>
+</div>
+
+<!-- Ayuda de navegación: complemento de la portada -->
+<div class="info-modal help-modal" id="helpModal" hidden aria-hidden="true">
+  <div class="info-modal-backdrop" data-close-help></div>
+  <section class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">
+    <button class="info-modal-close" type="button" aria-label="Cerrar ayuda" data-close-help>×</button>
+    <span class="info-modal-kicker">? Ayuda</span>
+    <h3 id="helpModalTitle">¿Cómo utilizar este recurso?</h3>
+    <p id="helpModalText">
+      Puedes avanzar y retroceder utilizando las flechas inferiores o seleccionar una sección desde el menú lateral.
+      También puedes pulsar sobre los textos para escucharlos y utilizar el botón Narrar para recibir una explicación de la pantalla.
+    </p>
+    <div class="info-modal-actions">
+      <button class="info-modal-listen" id="helpModalListen" type="button" aria-label="Escuchar ayuda">🔊 Escuchar</button>
     </div>
   </section>
 </div>
