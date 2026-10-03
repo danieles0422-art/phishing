@@ -4,11 +4,119 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>Phishing: no muerdas el anzuelo · Investigación</title>
+<title>Estrategias educativas para identificar y prevenir el phishing​ · Investigación</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&amp;family=Public+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css"></head>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Ajuste puntual · Primera entrada: tarjetas limpias + pop-ups */
+.rea-popups{
+  grid-template-columns:repeat(2,minmax(280px,360px))!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  gap:22px!important;
+  max-width:760px;
+  margin:30px auto 0!important;
+}
+.rea-popups .info-card{
+  position:relative;
+  pointer-events:auto;
+  min-height:150px;
+  padding:28px 24px!important;
+  border:1px solid #d9dfd0;
+  border-radius:18px;
+  background:#fffdf5;
+  box-shadow:0 8px 20px #1d3f2b0b;
+  color:var(--deep);
+  text-align:center;
+  cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.rea-popups .info-card:hover{
+  transform:translateY(-3px);
+  border-color:#b9d56f;
+  box-shadow:0 12px 26px #1d3f2b16;
+}
+.info-card-title{
+  display:block;
+  font:700 1.25rem/1.2 var(--serif);
+}
+.info-card-hint{
+  display:block;
+  margin-top:16px;
+  color:#6d7d73;
+  font:600 .78rem/1.2 var(--sans);
+}
+.info-modal[hidden]{display:none!important}
+.info-modal{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  padding:24px;
+}
+.info-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,38,25,.58);
+  backdrop-filter:blur(3px);
+}
+.info-modal-card{
+  position:relative;
+  z-index:1;
+  width:min(680px,92vw);
+  max-height:min(78vh,620px);
+  overflow:auto;
+  padding:34px 38px 32px;
+  border:1px solid #b9d56f;
+  border-radius:22px;
+  background:#f8f9e7;
+  box-shadow:0 24px 60px rgba(0,0,0,.25);
+  color:#365047;
+}
+.info-modal-kicker{
+  display:inline-block;
+  margin-bottom:12px;
+  padding:6px 11px;
+  border-radius:999px;
+  background:#e8f2d8;
+  color:#315b45;
+  font:700 .72rem var(--sans);
+  letter-spacing:.04em;
+}
+.info-modal-card h3{
+  margin:0 42px 14px 0;
+  color:#003f2a;
+  font:700 1.55rem/1.15 var(--serif);
+}
+.info-modal-card p{
+  margin:0;
+  color:#53645b;
+  font:400 1rem/1.65 var(--sans);
+}
+.info-modal-close{
+  position:absolute;
+  top:13px;
+  right:15px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:#0b5b3e;
+  color:#fff;
+  font-size:25px;
+  line-height:1;
+  cursor:pointer;
+}
+.info-modal-close:hover{background:#08744d}
+@media(max-width:700px){
+  .rea-popups{grid-template-columns:minmax(240px,420px)!important}
+  .info-modal-card{padding:30px 24px 26px}
+}
+</style>
+</head>
 <body>
 <header class="head">
 <div class="head-brand">
@@ -22,10 +130,11 @@
 <div class="side-brand"><span class="side-mark">🛡</span><div><b>Ruta de aprendizaje</b><small>Seguridad digital UDEC</small></div></div>
 <nav class="side-nav">
 <button class="side-item active" data-slide="0"><span class="side-icon">⌂</span><span><b>1. Portada</b><small>Introducción</small></span></button>
-<button class="side-item" data-slide="1"><span class="side-icon">?</span><span><b>2. Pregunta de investigación</b><small>Qué queremos comprender</small></span></button>
-<button class="side-item" data-slide="2"><span class="side-icon">◈</span><span><b>3. Problema y contexto</b><small>Por qué estudiarlo</small></span></button>
-<button class="side-item" data-slide="3"><span class="side-icon">▤</span><span><b>4. ¿Qué es el phishing?</b><small>Conceptos básicos</small></span></button>
-<button class="side-item" data-slide="4"><span class="side-icon">◌</span><span><b>5. Canales</b><small>Dónde puede aparecer</small></span></button>
+<button class="side-item" data-slide="1"><span class="side-icon">◎</span><span><b>2. REA y población objetivo</b><small>Qué aprenderás y a quién va dirigido</small></span></button>
+<button class="side-item" data-slide="2"><span class="side-icon">?</span><span><b>3. Pregunta de investigación</b><small>Qué queremos comprender</small></span></button>
+<button class="side-item" data-slide="3"><span class="side-icon">◈</span><span><b>4. Problema y contexto</b><small>Por qué estudiarlo</small></span></button>
+<button class="side-item" data-slide="4"><span class="side-icon">▤</span><span><b>5. ¿Qué es el phishing?</b><small>Conceptos básicos</small></span></button>
+<button class="side-item" data-slide="5"><span class="side-icon">◌</span><span><b>6. Canales</b><small>Dónde puede aparecer</small></span></button>
 
 
 <div class="side-footer"><strong>UDEC</strong><span>Universidad de Cundinamarca</span><em>2026</em></div>
@@ -36,10 +145,10 @@
 <!-- 1. Portada -->
 <article class="slide cover" data-mood="happy">
 <div class="copy">
-<h1 data-read="">
-      Phishing: no muerdas el anzuelo
+<h1 >
+      Estrategias educativas para identificar y prevenir el phishing​
     </h1>
-<p class="by" data-read="">
+<p class="by">
 <strong>RIASCOS ROMERO DANIEL STIVEN</strong><br/>
 <strong>GARCIA VILLARAGA JUAN FELIPE</strong><br/>
 <strong class="year">2026</strong>
@@ -47,12 +156,10 @@
 <button class="go" data-go="1">
       Empezar
     </button>
-<p class="hint">
-      Toca un texto para escucharlo.
-    </p>
+
 </div>
 <div class="art">
-<h3 data-read="" style="max-width: 350px; margin: 0 auto;">
+<h3 style="max-width: 350px; margin: 0 auto;">
       Parece real. No lo es.
     </h3>
 <svg aria-hidden="true" viewbox="0 0 320 430">
@@ -78,14 +185,31 @@
 <path d="M138 218l-11-9" stroke="#F4D03F" stroke-linecap="round" stroke-width="6"></path>
 </g>
 </svg>
-<p data-read="" style="max-width: 350px; margin: 0 auto;">
+<p style="max-width: 350px; margin: 0 auto;">
       Aprende a reconocer, evitar y reportar los engaños digitales que buscan obtener tus contraseñas, tu dinero o tu identidad. Ten en cuenta que un mensaje fraudulento puede llegar por diferentes medios, como correo electrónico, SMS, llamadas telefónicas o incluso códigos QR.
     </p>
 </div>
 </article>
-<!-- 2. Pregunta de investigación -->
+<!-- 2. REA y población objetivo -->
 <article class="slide plain research-slide" data-mood="neutral" hidden="">
-<span class="section-kicker">02 · Pregunta de investigación</span>
+  <span class="section-kicker">02 · Primera entrada</span>
+  <h2 data-read="">Resultado esperado de aprendizaje y población objetivo</h2>
+  <p class="lead" data-read="">Antes de iniciar los contenidos, conoce qué se espera lograr con el recurso y a quién está dirigido.</p>
+  <div class="research-focus rea-popups">
+    <button class="research-focus-card info-card" type="button" data-info="rea">
+      <span class="info-card-title">Resultado Esperado de Aprendizaje (REA)</span>
+      <span class="info-card-hint">＋ Ver detalles</span>
+    </button>
+    <button class="research-focus-card info-card" type="button" data-info="poblacion">
+      <span class="info-card-title">Población objetivo</span>
+      <span class="info-card-hint">＋ Ver detalles</span>
+    </button>
+  </div>
+
+</article>
+<!-- 3. Pregunta de investigación -->
+<article class="slide plain research-slide" data-mood="neutral" hidden="">
+<span class="section-kicker">03 · Pregunta de investigación</span>
 <h2 data-read="">¿Qué queremos comprender?</h2>
 <p class="lead" data-read="">
     ¿Cómo se relacionan las estrategias educativas digitales con el fortalecimiento de competencias para la identificación y prevención del phishing según la evidencia científica disponible?
@@ -98,7 +222,7 @@
 </article>
 <!-- 3. Problema y contexto -->
 <article class="slide plain research-slide" data-mood="alert" hidden="">
-<span class="section-kicker">03 · Problema y contexto</span>
+<span class="section-kicker">04 · Problema y contexto</span>
 <h2 data-read="">El reto no es solo reconocer el engaño</h2>
 <p class="lead" data-read="">La evidencia reciente muestra que la formación puede mejorar conocimientos y actitudes, pero el cambio de comportamiento es más difícil de sostener. Por eso resulta necesario analizar qué estrategias educativas favorecen competencias aplicables en situaciones reales.</p>
 <div class="grid3 research-grid">
@@ -110,7 +234,7 @@
 </article>
 <!-- 4. Qué es -->
 <article class="slide plain" data-mood="neutral" hidden="">
-<span class="section-kicker">04 · Reconocer</span><h2 data-read="">¿Qué es el phishing?</h2>
+<span class="section-kicker">05 · Reconocer</span><h2 data-read="">¿Qué es el phishing?</h2>
 <p class="lead" data-read="">Es un engaño en el que alguien se hace pasar por una persona o una entidad de confianza para que entregues información, dinero o acceso.</p>
 <div class="ideas">
 <div class="idea i1" data-read=""><b>Se disfraza</b><p>Imita a tu banco, a la universidad, a un jefe o a una empresa de mensajería.</p></div>
@@ -121,7 +245,7 @@
 </article>
 <!-- 3. Canales -->
 <article class="slide plain" data-mood="neutral" hidden="">
-<span class="section-kicker">05 · Canales</span><h2 data-read="">El anzuelo cambia de canal</h2>
+<span class="section-kicker">06 · Canales</span><h2 data-read="">El anzuelo cambia de canal</h2>
 <p class="lead" data-read="">La trampa es la misma, pero puede llegar por cualquier medio en el que confíes.</p>
 <div class="grid3">
 <div class="card" data-read="">
@@ -393,11 +517,11 @@ function note(msg){
 }
 
 /* ---------- Navegación ---------- */
-const MODULES=['Introducción','Pregunta de investigación','Problema y contexto','Reconocer el phishing','Canales'];
+const MODULES=['Introducción','REA y población objetivo','Pregunta de investigación','Problema y contexto','Reconocer el phishing','Canales'];
 
 /* ---------- Guion breve del avatar para cada diapositiva ----------*/
 const AVATAR_SCRIPTS=[
-  'Hola, bienvenidos a nuestra capacitación sobre phishing, en este recorrido vamos a aprender a reconocer los engaños digitales y a tomar decisiones más seguras cuando recibimos mensajes sospechosos',
+  '¡Hola! soy tu guía de seguridad UDEC, mi misión el día de hoy es acompañarte en este aprendizaje sobre el phishing y cómo puedes protegerte de los engaños digitales, en este ODC descubriremos cómo los ciberdelincuentes utilizan correos, mensajes y enlaces falsos para obtener información personal, durante este viaje por las distintas diapositivas, aprenderás a identificar señales de alerta, reconocer posibles amenazas y aplicar buenas prácticas para navegar de forma segura, te recuerdo que este contenido es interactivo, puedes avanzar con las flechas, participar en las actividades y poner a prueba tus conocimientos, ¡Recuerda, antes de hacer clic, aprende a identificar el riesgo!',
   'En esta parte presentamos la pregunta que orienta nuestro trabajo, queremos comprender cómo las estrategias educativas digitales pueden fortalecer las competencias necesarias para identificar y prevenir el phishing',
   'El problema parte de una situación común, conocer qué es el phishing no siempre significa saber actuar frente a un intento real, por eso nos interesa revisar qué formas de aprendizaje pueden ayudar a llevar ese conocimiento a situaciones cotidianas',
   'Ahora vamos a conocer qué es el phishing y cómo funciona, normalmente el atacante intenta hacerse pasar por alguien de confianza y busca que actuemos rápido, entreguemos información o abramos un enlace',
@@ -427,10 +551,7 @@ function go(x){
   const speech=$('speechCard');if(speech){
     const msgs=[
       '¡Hola! Soy tu guía de seguridad digital. Pulsa «Narrar» para escuchar una explicación breve de esta diapositiva o toca cualquier texto para escucharlo.',
-      AVATAR_SCRIPTS[1],
-      AVATAR_SCRIPTS[2],
-      AVATAR_SCRIPTS[3],
-      AVATAR_SCRIPTS[4]
+      ...AVATAR_SCRIPTS.slice(1)
     ];
     speech.textContent=msgs[n]||msgs[0];
   }
@@ -534,6 +655,80 @@ $('open').onclick=()=>setAgent(true);
 setAgent(!matchMedia('(max-width:1099px)').matches);
 // Mostrar solo la portada al cargar la presentación
 go(0);
+
+
+/* ---------- Pop-ups de Primera entrada ---------- */
+const INFO_CONTENT={
+  rea:{
+    title:'Resultado Esperado de Aprendizaje (REA)',
+    text:'Al finalizar el ODC, el usuario será capaz de identificar señales de alerta en correos electrónicos, mensajes y enlaces sospechosos, reconocer las principales técnicas y tácticas utilizadas en ataques de phishing y aplicar buenas prácticas de seguridad digital para prevenir engaños y proteger su información personal​'
+  },
+  poblacion:{
+    title:'Población objetivo',
+    text:'El ODC está dirigido a estudiantes, docentes y usuarios que utilizan dispositivos, plataformas y servicios digitales, especialmente personas con conocimientos básicos en ciberseguridad que desean fortalecer sus habilidades para reconocer amenazas de phishing, también puede ser utilizado por empresas interesadas en promover la cultura de seguridad digital y la prevención de ataques mediante la educación.​'
+  }
+};
+function openInfo(key){
+  const data=INFO_CONTENT[key];
+  const infoModal=$('infoModal');
+  const infoModalTitle=$('infoModalTitle');
+  const infoModalText=$('infoModalText');
+  if(!data||!infoModal||!infoModalTitle||!infoModalText)return;
+  infoModalTitle.textContent=data.title;
+  infoModalText.textContent=data.text;
+  // El mismo motor de voz del avatar usará este texto cuando se pulse Escuchar.
+  infoModalText.dataset.say = data.title + '. ' + data.text;
+  infoModal.hidden=false;
+  infoModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('info-open');
+  requestAnimationFrame(()=>infoModal.querySelector('.info-modal-close')?.focus());
+}
+function closeInfo(){
+  const infoModal=$('infoModal');
+  if(!infoModal)return;
+  stopAll();
+  infoModal.hidden=true;
+  infoModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('info-open');
+}
+// Delegación de eventos: funciona aunque la diapositiva se vuelva a renderizar o cambie de estado.
+// Pop-ups: se gestionan en fase de captura para que ninguna otra
+// interacción de la presentación bloquee el clic antes de abrirlos.
+function handleInfoClick(e){
+  const card=e.target.closest?.('.info-card[data-info]');
+  if(card){
+    e.preventDefault();
+    e.stopPropagation();
+    openInfo(card.getAttribute('data-info'));
+    return;
+  }
+  const close=e.target.closest?.('[data-close-info]');
+  if(close){
+    e.preventDefault();
+    e.stopPropagation();
+    closeInfo();
+  }
+}
+document.addEventListener('click',handleInfoClick,true);
+// También enlazamos directamente las tarjetas actuales como respaldo.
+$$('.info-card[data-info]').forEach(card=>{
+  card.addEventListener('click',e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    openInfo(card.getAttribute('data-info'));
+  });
+});
+document.addEventListener('click',e=>{
+  const listen=e.target.closest?.('#infoModalListen');
+  if(!listen)return;
+  e.preventDefault();
+  e.stopPropagation();
+  const text=$('infoModalText');
+  if(!text)return;
+  // Usa exactamente la misma función que se usa al pulsar un texto de la diapositiva.
+  single(text);
+},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('infoModal')&&!$('infoModal').hidden)closeInfo()});
 
 /* ---------- Interacción con textos ---------- */
 function enhance(){
@@ -676,5 +871,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+<!-- Popup global de Primera entrada: queda fuera de las diapositivas para que siempre pueda abrirse -->
+<div class="info-modal" id="infoModal" hidden aria-hidden="true">
+  <div class="info-modal-backdrop" data-close-info></div>
+  <section class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+    <button class="info-modal-close" type="button" aria-label="Cerrar información" data-close-info>×</button>
+    <span class="info-modal-kicker">＋ Información</span>
+    <h3 id="infoModalTitle"></h3>
+    <p id="infoModalText"></p>
+    <div class="info-modal-actions">
+      <button class="info-modal-listen" id="infoModalListen" type="button" aria-label="Escuchar información">🔊 Escuchar</button>
+    </div>
+  </section>
+</div>
+
 </body>
 </html>

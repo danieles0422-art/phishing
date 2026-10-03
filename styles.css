@@ -25,7 +25,7 @@ button{font-family:inherit}
 
 /* Tipografía */
 h1,h2,h3{font-family:var(--serif);font-weight:700;color:var(--hd);margin:0}
-h1{font-size:clamp(2.5rem,5.2vw,4.4rem);line-height:1;letter-spacing:-.01em;width:fit-content;max-width:100%}
+h1{font-size:clamp(1.5rem,3.5vw,2.5rem);line-height:1;letter-spacing:-.01em;width:fit-content;max-width:100%}
 h2{font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.06;width:fit-content;max-width:100%}
 .lead{margin:16px 0 0;max-width:62ch;font-size:1.1rem;line-height:1.55;color:var(--ink2)}
 .by{margin:22px 0 24px;color:var(--mut);font-size:.95rem}
@@ -1092,3 +1092,23 @@ body.agent-off .open{display:block !important;pointer-events:auto}
   color:#d8eee2;
   font:400 .78rem/1.2 var(--sans);
 }
+
+/* Botón Escuchar del popup: usa el mismo motor de voz del avatar */
+.info-modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:18px;
+}
+.info-modal-listen{
+  border:0;
+  border-radius:999px;
+  padding:10px 17px;
+  background:#A7D129;
+  color:#163326;
+  font:700 .84rem Arial,sans-serif;
+  cursor:pointer;
+  box-shadow:0 5px 14px rgba(0,0,0,.12);
+  transition:filter .2s ease,transform .2s ease;
+}
+.info-modal-listen:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.info-modal-listen:focus-visible{outline:2px solid #F4D03F;outline-offset:3px}
