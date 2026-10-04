@@ -307,6 +307,7 @@ h2{font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.06;width:fit-content;max-w
 .res{border:1px solid #A7D12966;background:linear-gradient(135deg,#214D35,#174C34);text-align:center;padding:28px}
 .res h3{font-size:2.4rem;color:#F4D03F}
 .res-score{font:700 3rem var(--serif);color:#A7D129;line-height:1;margin:5px 0 10px}
+.res-stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:4px auto 14px}.res-stats span{padding:7px 12px;border-radius:999px;background:#123F2D;color:var(--ink2);font-size:.82rem}.res-stats span:first-child{border:1px solid #A7D12966}.res-stats span:last-child{border:1px solid #FF9A8A55}
 .res-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;margin:18px auto;max-width:560px;text-align:left}
 .res-list span{padding:8px 10px;border-radius:9px;background:#123F2D;color:var(--ink2);font-size:.86rem}
 .res-list span:before{content:"✓";color:#A7D129;font-weight:700;margin-right:7px}
@@ -1306,4 +1307,137 @@ body.info-open{overflow:hidden}
   .cover-actions .go{width:auto}
   .info-modal-actions{justify-content:stretch}
   .info-modal-listen{width:100%}
+}
+
+
+/* ACTIVIDADES · BOTONES Y RETROALIMENTACIÓN EN POPUP */
+.mini-activity{margin:20px auto 0;max-width:980px;padding:17px 19px;border:1px solid rgba(167,209,41,.34);border-left:4px solid #a7d129;border-radius:16px;background:rgba(4,54,39,.42);box-shadow:0 10px 24px rgba(0,0,0,.12)}
+.mini-activity-head{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;color:#f8f9e7}
+.mini-activity-head span{font:800 .95rem var(--sans);color:#f4d03f}.mini-activity-head small{font:600 .82rem var(--sans);color:#eef5df}
+.mini-options{display:flex;flex-wrap:wrap;gap:9px}.mini-options button{flex:1 1 180px;min-height:40px;border:1px solid rgba(244,208,63,.42);border-radius:10px;padding:9px 14px;background:#0d6247;color:#f8f9e7;font:700 .82rem/1.2 var(--sans);cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.12);transition:transform .16s ease,background .16s ease,border-color .16s ease,box-shadow .16s ease}
+.mini-options button:hover:not(:disabled){transform:translateY(-2px);background:#147a56;border-color:#f4d03f;box-shadow:0 7px 14px rgba(0,0,0,.18)}.mini-options button:focus-visible{outline:3px solid #f4d03f;outline-offset:2px}.mini-options button:disabled{cursor:default;opacity:.58}.mini-options button.correct{background:#2e7d4f;border-color:#a7d129;color:#fff}.mini-options button.incorrect{background:#7a3427;border-color:#ff9a8a;color:#fff}
+.info-trigger{display:inline-flex;align-items:center;justify-content:center;margin:12px auto 0;padding:8px 14px;border:1px solid rgba(167,209,41,.5);border-radius:999px;background:rgba(7,91,62,.72);color:#eaf3d9;font:700 .78rem var(--sans);cursor:pointer;text-decoration:none;transition:.16s ease}.info-trigger:hover{background:#0d6e4b;border-color:#f4d03f;color:#fff;transform:translateY(-1px)}
+.mini-feedback{display:none!important}
+.activity-feedback-modal[hidden]{display:none!important}.activity-feedback-modal{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:24px}.activity-feedback-backdrop{position:absolute;inset:0;background:rgba(0,28,19,.68);backdrop-filter:blur(5px)}
+.activity-feedback-card{position:relative;z-index:1;width:min(520px,92vw);padding:30px 32px 28px;border:1px solid #a7d129;border-radius:24px;background:#f8f9e7;color:#365047;box-shadow:0 26px 70px rgba(0,0,0,.35);text-align:center;animation:activityPopupIn .18s ease-out}
+.activity-feedback-icon{width:52px;height:52px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:#a7d129;color:#174b36;font:900 1.45rem var(--sans)}.activity-feedback-kicker{display:inline-block;padding:6px 11px;border-radius:999px;background:#e8f2d8;color:#315b45;font:800 .7rem var(--sans);letter-spacing:.04em;text-transform:uppercase}.activity-feedback-card h3{margin:13px 34px 10px;color:#003f2a;font:800 1.65rem/1.15 var(--serif)}.activity-feedback-card p{margin:0 auto;max-width:430px;color:#53645b;font:500 .96rem/1.6 var(--sans)}
+.activity-feedback-close{position:absolute;top:12px;right:13px;width:36px;height:36px;border:0;border-radius:50%;background:#0b5b3e;color:#fff;font-size:23px;line-height:1;cursor:pointer}.activity-feedback-close:hover{background:#08744d}.activity-feedback-actions{display:flex;justify-content:center;gap:10px;margin-top:22px}.activity-feedback-actions button{min-width:150px;padding:10px 16px;border-radius:999px;font:800 .82rem var(--sans);cursor:pointer;transition:.16s ease}.activity-feedback-retry{border:1px solid #b85c4a;background:#fff;color:#7a3427}.activity-feedback-next{border:1px solid #a7d129;background:#a7d129;color:#174b36}.activity-feedback-actions button:hover{transform:translateY(-1px);filter:brightness(.98)}.activity-error .activity-feedback-icon{background:#f4d03f;color:#5f4a00}.activity-error .activity-feedback-kicker{background:#f9e8e4;color:#7a3427}.activity-error .activity-feedback-card h3{color:#7a3427}.activity-error .activity-feedback-retry{background:#7a3427;color:#fff;border-color:#7a3427}@keyframes activityPopupIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:700px){.mini-activity-head{display:block}.mini-activity-head small{display:block;margin-top:4px}.mini-options button{flex-basis:100%}.activity-feedback-card{padding:28px 22px 24px}.activity-feedback-actions{flex-direction:column}.activity-feedback-actions button{width:100%}}
+
+/* =========================================================
+   CRÉDITOS Y LICENCIA
+   ========================================================= */
+.credits-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:900px;margin:24px auto 0}
+.credit-card{padding:18px;border:1px solid #d9dfd0;border-radius:15px;background:#fffdf5}
+.credit-card b{display:block;margin-bottom:7px;color:var(--deep);font:700 1rem var(--serif)}
+.credit-card p{margin:0;color:#53645b;font-size:.86rem;line-height:1.45}
+.license-box{max-width:900px;margin:18px auto 0;padding:16px 18px;border-radius:14px;background:#e8f2d8;border:1px solid #b9d56f;color:#365047}
+.license-box strong{color:#075c45;font:700 1rem var(--serif)}
+.license-box p{margin:6px 0 0;font-size:.84rem;line-height:1.45}
+.tasl-note{max-width:900px;margin:14px auto 0;color:#6d7d73;font-size:.78rem;line-height:1.4}
+@media(max-width:700px){.mini-activity-head{display:block}.mini-activity-head small{display:block;margin-top:4px}.credits-grid{grid-template-columns:1fr}.mini-options button{flex-basis:100%}}
+
+
+/* =========================================================
+   AJUSTE FINAL · ACTIVIDADES Y EVALUACIÓN HOMOLOGADAS
+   - La retroalimentación usa el mismo popup para módulos y evaluación.
+   - Cerrar el popup detiene inmediatamente la narración del avatar.
+   - Reintentar queda disponible también después de una respuesta correcta.
+   - La evaluación adopta el mismo lenguaje visual de las actividades.
+   ========================================================= */
+.mini-activity.quiz-activity{
+  max-width:980px;
+  margin-top:20px;
+}
+.quiz-activity .qtop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin:0 0 9px;
+  color:#B8CDBA;
+  font-size:.82rem;
+  font-weight:700;
+}
+.quiz-activity .qtop span:last-child{color:#F4D03F}
+.quiz-activity .quiz-progress{
+  height:7px;
+  margin:0 0 15px;
+  max-width:none;
+  border-radius:99px;
+  background:#35634B;
+  overflow:hidden;
+}
+.quiz-activity .quiz-progress i{
+  display:block;
+  height:100%;
+  border-radius:99px;
+  background:linear-gradient(90deg,#F4D03F,#A7D129);
+}
+.quiz-activity .msg{
+  max-width:none;
+  margin:0;
+  border:1px solid #35634B;
+  border-left:4px solid #F4D03F;
+  border-radius:14px;
+  background:#174C34;
+  color:#F8F9E7;
+  box-shadow:0 10px 24px #001f1320;
+}
+.quiz-activity .msg p{color:#D8E5D9!important}
+.quiz-activity .mh b{color:#F4D03F}
+.quiz-activity .mh span{color:#B8CDBA}
+.quiz-options{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.quiz-options button{
+  flex:initial!important;
+  min-height:48px!important;
+  border:1px solid #4C836C!important;
+  border-radius:12px!important;
+  background:#0D6247!important;
+  color:#F8F9E7!important;
+  text-align:center!important;
+  font-weight:800!important;
+}
+.quiz-options button:hover:not(:disabled){
+  background:#147A56!important;
+  border-color:#F4D03F!important;
+}
+.quiz-options button.correct{background:#2E7D4F!important;border-color:#A7D129!important}
+.quiz-options button.incorrect{background:#7A3427!important;border-color:#FF9A8A!important}
+.quiz-result-shell{
+  padding:20px!important;
+}
+.quiz-result-shell .res{
+  max-width:none;
+  margin:0;
+  border:1px solid #A7D12966;
+  border-radius:18px;
+  background:linear-gradient(135deg,#214D35,#174C34);
+}
+.quiz-result-shell .result-actions{margin-top:16px}
+.activity-feedback-actions .activity-feedback-retry{
+  background:#7A3427;
+  color:#fff;
+  border-color:#7A3427;
+}
+.activity-success .activity-feedback-retry{
+  background:#fff;
+  color:#365047;
+  border-color:#A7D129;
+}
+.activity-feedback-actions .activity-feedback-next{
+  background:#A7D129;
+  color:#174B36;
+  border-color:#A7D129;
+}
+@media(max-width:700px){
+  .quiz-options{grid-template-columns:1fr}
+  .quiz-activity .qtop{display:block}
+  .quiz-activity .qtop span{display:block}
+  .quiz-activity .qtop span:last-child{margin-top:3px}
 }
